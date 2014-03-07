@@ -91,6 +91,14 @@ object RoutesCompilerSpec extends Specification {
       parseRoute("GET /s p.c.m(i: Int)").call.parameters.get.head.typeName must_== "Int"
     }
 
+    "parse argument parameterized type" in {
+      parseRoute("GET /s p.c.m(i: Option[Int])").call.parameters.get.head.typeName must_== "Option[Int]"
+    }
+
+    "parse argument multi-parameterized type" in {
+      parseRoute("GET /s p.c.m(i: Future[Try[Option[Int]]])").call.parameters.get.head.typeName must_== "Future[Try[Option[Int]]]"
+    }
+
     "parse argument default value" in {
       parseRoute("GET /s p.c.m(i: Int ?= 3)").call.parameters.get.head.default must beSome("3")
     }

@@ -134,7 +134,7 @@ object RoutesCompiler {
     }
 
     def brackets: Parser[String] = {
-      "[" ~ (several((parentheses | not("]") ~> """.""".r))) ~ commit("]") ^^ {
+      "[" ~ (several((brackets | parentheses | not("]") ~> """.""".r))) ~ commit("]") ^^ {
         case p1 ~ charList ~ p2 => p1 + charList.mkString + p2
       }
     }
